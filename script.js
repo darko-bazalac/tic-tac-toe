@@ -14,14 +14,22 @@ const fieldEls = document.querySelectorAll("[data-field]");
 const board = document.getElementById("board");
 const winTextEL = document.querySelector("[data-win-msg]");
 const winEl = document.getElementById("winningMessage");
+const restartBtn = document.getElementById("restartButton");
 let oTurn;
 
-(function startGame() {
+restartBtn.addEventListener(
+  "click",
+  startGame,
+)(function startGame() {
   oTurn = false;
   fieldEls.forEach((field) => {
+    field.classList.remove(X_CLASS);
+    field.classList.remove(O_CLASS);
+    field.removeEventListener("click", handleClick);
     field.addEventListener("click", handleClick, { once: true });
   });
   setHoverEffect();
+  winEl.classList.remove("show");
 })();
 
 function handleClick(e) {
