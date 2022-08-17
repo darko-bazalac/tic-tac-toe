@@ -12,6 +12,8 @@ const WINING_COMBINATIONS = [
 ];
 const fieldEls = document.querySelectorAll("[data-field]");
 const board = document.getElementById("board");
+const winTextEL = document.querySelector("[data-win-msg]");
+const winEl = document.getElementById("winningMessage");
 let oTurn;
 
 (function startGame() {
@@ -29,12 +31,31 @@ function handleClick(e) {
   field.classList.add(turn);
   //Check for Win
   if (checkWin(turn)) {
-    console.log(`Winner ${turn}`);
+    endGame(false);
+  } else if (checkDraw()) {
+    endGame(true);
+  } else {
+    //Swap Turns
+    oTurn = !oTurn;
+    setHoverEffect();
   }
+}
 
-  //Swap Turns
-  oTurn = !oTurn;
-  setHoverEffect();
+function endGame(isDraw) {
+  if (isDraw) {
+    winTextEL.textContent = "Draw!";
+  } else {
+    winTextEL.textContent = `${oTurn ? "O's" : "X's"} wins!`;
+  }
+  winEl.classList.add("show");
+}
+
+function checkDraw() {
+  return [...fieldEls].every((field) => {
+    return (
+      field.classList.contains(X_CLASS) || field.classList.contains(O_CLASS)
+    );
+  });
 }
 
 function setHoverEffect() {
