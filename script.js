@@ -17,10 +17,11 @@ const winEl = document.getElementById("winningMessage");
 const restartBtn = document.getElementById("restartButton");
 let oTurn;
 
-restartBtn.addEventListener(
-  "click",
-  startGame,
-)(function startGame() {
+startGame();
+
+restartBtn.addEventListener("click", startGame);
+
+function startGame() {
   oTurn = false;
   fieldEls.forEach((field) => {
     field.classList.remove(X_CLASS);
@@ -30,7 +31,7 @@ restartBtn.addEventListener(
   });
   setHoverEffect();
   winEl.classList.remove("show");
-})();
+}
 
 function handleClick(e) {
   //placeMark
